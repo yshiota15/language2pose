@@ -279,7 +279,10 @@ class KITMocap(RawData):
       for filename in tup[2]:
         if Path(filename).suffix == '.xml':
           annotpath = Path(tup[0])/(filename.split('_')[0] + '_annotations.json')
-          annot = json.load(open(annotpath, 'r'))
+          if os.path.isfile(annotpath):
+            annot = json.load(open(annotpath, 'r'))
+          else:
+            annot = None
           quatpath = filename.split('_')[0] + '_quat.csv'
           fkepath = filename.split('_')[0] + '_quat.fke'
           rifkepath = filename.split('_')[0] + '_quat.rifke'
